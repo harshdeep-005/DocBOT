@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAG.OS_TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#001e2f",
+                      "on-secondary-fixed-variant": "#005047",
+                      "secondary-fixed-dim": "#3cddc7",
+                      "background": "#18120c",
+                      "surface-container-highest": "#3b342c",
+                      "on-surface-variant": "#d6c4b0",
+                      "primary": "#ffc16c",
+                      "surface-container-high": "#302921",
+                      "surface-variant": "#3b342c",
+                      "primary-fixed": "#ffddb5",
+                      "surface-container": "#251f17",
+                      "on-secondary": "#003731",
+                      "on-secondary-container": "#004d44",
+                      "on-primary-fixed-variant": "#643f00",
+                      "on-tertiary": "#00344e",
+                      "on-background": "#ede0d5",
+                      "primary-container": "#e8a33d",
+                      "surface-bright": "#3f3830",
+                      "primary-fixed-dim": "#ffb956",
+                      "tertiary-container": "#63b9f3",
+                      "outline": "#9e8e7c",
+                      "secondary-container": "#03c6b2",
+                      "on-tertiary-fixed-variant": "#004b6f",
+                      "surface": "#18120c",
+                      "error-container": "#93000a",
+                      "surface-container-lowest": "#130d07",
+                      "on-primary-fixed": "#2a1800",
+                      "surface-container-low": "#211b13",
+                      "error": "#ffb4ab",
+                      "inverse-on-surface": "#362f27",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-container": "#00486a",
+                      "tertiary-fixed-dim": "#8bceff",
+                      "inverse-primary": "#835400",
+                      "inverse-surface": "#ede0d5",
+                      "on-secondary-fixed": "#00201c",
+                      "outline-variant": "#514536",
+                      "secondary": "#44e2cd",
+                      "surface-dim": "#18120c",
+                      "on-surface": "#ede0d5",
+                      "surface-tint": "#ffb956",
+                      "tertiary": "#99d3ff",
+                      "on-error": "#690005",
+                      "tertiary-fixed": "#c9e6ff",
+                      "secondary-fixed": "#62fae3",
+                      "on-primary-container": "#5f3c00",
+                      "on-primary": "#462b00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "panel-inspector": "320px",
+                      "margin-desktop": "24px",
+                      "unit": "4px",
+                      "panel-sidebar": "280px",
+                      "gutter": "16px",
+                      "margin-mobile": "12px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "citation-link": [
+                              "IBM Plex Mono"
+                      ],
+                      "utility-data": [
+                              "IBM Plex Mono"
+                      ],
+                      "display-lg": [
+                              "IBM Plex Mono"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "15px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "citation-link": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "utility-data": [
+                              "12px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0E14; /* Forced background from prompt */
+            color: #E6E9F0;
+        }
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #232A38;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B93A7;
+        }
+        ::-webkit-scrollbar-corner {
+            background: #0B0E14;
+        }
+
+        .border-technical {
+            border-color: #232A38;
+        }
+        
+        .bg-level-1 {
+            background-color: #12161F;
+        }
+        
+        .bg-level-2 {
+            background-color: #171C27;
+        }
+
+        .text-muted {
+            color: #8B93A7;
+        }
+        
+        .citation-chip {
+            background-color: rgba(45, 212, 191, 0.1);
+            color: #2DD4BF;
+        }
+    </style>
+</head>
+<body class="font-body-base antialiased h-screen w-full flex overflow-hidden">
+<!-- Mobile Drawer Overlay -->
+<div class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" id="mobile-drawer-overlay"></div>
+<!-- SideNavBar -->
+<aside class="w-[260px] h-screen flex flex-col bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant fixed left-0 top-0 h-full overflow-y-auto z-50 transition-transform -translate-x-full md:translate-x-0 md:static" id="sidebar">
+<!-- Header -->
+<div class="p-gutter border-b border-outline-variant flex flex-col gap-2">
+<div class="font-headline-md text-headline-md text-primary tracking-tighter">RAG_ENGINE_V1</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">memory</span>
+                Instance: Alpha-9
+            </div>
+<button class="mt-4 w-full bg-primary-container text-black font-utility-data text-utility-data py-2 px-4 flex items-center justify-center gap-2 hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+                Upload Document
+            </button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 overflow-y-auto py-2">
+<div class="px-gutter mb-2 mt-4 font-label-caps text-label-caps text-on-surface-variant">Views</div>
+<ul>
+<!-- Documents (Active) -->
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-primary border-l-2 border-primary bg-surface-container-high font-utility-data text-utility-data hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">description</span>
+                        Documents
+                    </a>
+</li>
+<!-- Models -->
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined">schema</span>
+                        Models
+                    </a>
+</li>
+<!-- Analytics -->
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+                        Analytics
+                    </a>
+</li>
+<!-- Settings -->
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+<div class="px-gutter mb-2 mt-6 font-label-caps text-label-caps text-on-surface-variant">Active Workspace</div>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-gutter py-1 border-l-2 border-primary-container text-primary-container bg-surface-container-highest font-utility-data text-utility-data group" href="#">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
+<span class="truncate">Q3_Report.pdf</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-1 border-l-2 border-transparent text-on-surface-variant hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span class="truncate">Legal_Brief_V2.docx</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-1 border-l-2 border-transparent text-on-surface-variant hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
+<span class="truncate">System_Specs.pdf</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Footer -->
+<div class="mt-auto border-t border-outline-variant py-2">
+<ul>
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined">help</span>
+                        Documentation
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors font-utility-data text-utility-data" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                        Terminal
+                    </a>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-screen min-w-0">
+<!-- TopAppBar -->
+<header class="h-12 w-full bg-surface dark:bg-surface flex justify-between items-center px-margin-desktop border-b border-outline-variant shrink-0">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary hover:opacity-80" id="mobile-menu-btn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">RAG.OS_TERMINAL</h1>
+</div>
+<!-- Navigation Links (Center/Left-ish Desktop) -->
+<nav class="hidden md:flex items-center gap-6 font-utility-data text-utility-data h-full">
+<a class="text-primary border-b-2 border-primary h-full flex items-center px-2 cursor-pointer transition-colors" href="#">Query</a>
+<a class="text-on-surface-variant hover:text-primary h-full flex items-center px-2 cursor-pointer transition-colors" href="#">Knowledge Base</a>
+<a class="text-on-surface-variant hover:text-primary h-full flex items-center px-2 cursor-pointer transition-colors" href="#">Logs</a>
+</nav>
+<div class="flex items-center gap-4">
+<!-- Search Bar Placeholder -->
+<div class="hidden lg:flex items-center bg-surface-container-low border border-outline-variant px-2 py-1 focus-within:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none outline-none text-utility-data font-utility-data text-on-surface w-40 placeholder:text-outline" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2 text-primary">
+<button class="hover:text-primary-container transition-colors cursor-pointer"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:text-primary-container transition-colors cursor-pointer"><span class="material-symbols-outlined">account_tree</span></button>
+</div>
+<button class="bg-surface-container-highest border border-outline-variant text-primary font-utility-data text-utility-data px-3 py-1 hover:border-primary transition-colors">
+                    Deploy
+                </button>
+<div class="w-8 h-8 bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">person</span>
+</div>
+</div>
+</header>
+<!-- Chat / Canvas Area -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background relative">
+<!-- Thread Container -->
+<div class="flex-1 overflow-y-auto p-gutter md:p-margin-desktop flex justify-center pb-32">
+<div class="w-full max-w-4xl flex flex-col gap-8">
+<!-- System Welcome / Meta -->
+<div class="flex justify-center mb-4">
+<div class="font-utility-data text-utility-data text-muted border border-technical px-4 py-1 bg-level-1">
+                            SESSION_START: 2024-10-27T14:32:01Z | DOC_CONTEXT: Q3_Report.pdf
+                        </div>
+</div>
+<!-- Message 1: User -->
+<div class="flex flex-col items-end w-full">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-caps text-label-caps text-muted">USER</span>
+<span class="material-symbols-outlined text-[14px] text-muted">person</span>
+</div>
+<div class="bg-level-2 border border-technical p-4 max-w-[85%] text-body-base font-body-base shadow-sm">
+                            What are the key risks mentioned in the Q3 report?
+                        </div>
+</div>
+<!-- Message 2: AI Response -->
+<div class="flex flex-col items-start w-full group">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">smart_toy</span>
+<span class="font-label-caps text-label-caps text-primary-container">RAG_ENGINE</span>
+</div>
+<div class="max-w-[90%] text-body-base font-body-base leading-relaxed">
+                            The report identifies three primary risks: supply chain volatility in the EMEA region, currency fluctuations affecting net margins, and increasing regulatory pressure regarding data privacy.
+                            <a class="inline-flex items-center gap-1 citation-chip px-1.5 py-0.5 ml-1 font-citation-link text-citation-link border border-[#2DD4BF]/30 hover:bg-[#2DD4BF]/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-[12px]">find_in_page</span>
+                                page 12
+                            </a>
+</div>
+<!-- AI Sources Panel -->
+<div class="mt-4 w-full border border-technical bg-level-1">
+<!-- Toggle Header -->
+<button class="w-full flex items-center justify-between p-2 hover:bg-surface-container-highest transition-colors text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.chevron').innerText = this.querySelector('.chevron').innerText === 'expand_more' ? 'expand_less' : 'expand_more';">
+<div class="flex items-center gap-2 font-utility-data text-utility-data text-muted">
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+                                    View sources (3)
+                                </div>
+<span class="material-symbols-outlined text-[16px] text-muted chevron">expand_less</span>
+</button>
+<!-- Expanded Content -->
+<div class="p-3 border-t border-technical flex flex-col gap-2 bg-[#0B0E14]">
+<!-- Source 1 -->
+<div class="border border-technical p-2 font-utility-data text-utility-data text-muted hover:border-primary-container transition-colors cursor-pointer group/src">
+<div class="flex justify-between mb-1">
+<span class="text-primary-container">Source [12]</span>
+<span class="opacity-0 group-hover/src:opacity-100 transition-opacity">View Document</span>
+</div>
+                                    EMEA logistics providers are currently facing a 15% delay...
+                                </div>
+<!-- Source 2 -->
+<div class="border border-technical p-2 font-utility-data text-utility-data text-muted hover:border-primary-container transition-colors cursor-pointer group/src">
+<div class="flex justify-between mb-1">
+<span class="text-primary-container">Source [12]</span>
+<span class="opacity-0 group-hover/src:opacity-100 transition-opacity">View Document</span>
+</div>
+                                    Net margin targets (4.2%) remain sensitive to USD/EUR...
+                                </div>
+<!-- Source 3 -->
+<div class="border border-technical p-2 font-utility-data text-utility-data text-muted hover:border-primary-container transition-colors cursor-pointer group/src">
+<div class="flex justify-between mb-1">
+<span class="text-primary-container">Source [14]</span>
+<span class="opacity-0 group-hover/src:opacity-100 transition-opacity">View Document</span>
+</div>
+                                    Upcoming GDPR-X revisions may require significant re-architecture...
+                                </div>
+</div>
+</div>
+</div>
+<!-- Error State Example -->
+<div class="flex flex-col items-start w-full">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-error">error</span>
+<span class="font-label-caps text-label-caps text-error">SYSTEM_EXCEPTION</span>
+</div>
+<div class="text-[#F0654F] font-utility-data text-utility-data bg-[#93000a]/10 border border-[#93000a]/30 p-3 w-full max-w-[90%]">
+                            Couldn't generate an answer. Try again, or upload a different document.
+                        </div>
+</div>
+<!-- Loading State Example (Hidden normally) -->
+<div class="flex flex-col items-start w-full hidden">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container animate-spin">sync</span>
+<span class="font-label-caps text-label-caps text-primary-container">PROCESSING_QUERY</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="absolute bottom-0 left-0 w-full bg-level-1 border-t border-technical p-gutter md:p-margin-desktop shadow-[0_-10px_40px_rgba(11,14,20,0.8)]">
+<div class="max-w-4xl mx-auto flex gap-4 items-end">
+<!-- Context Indicator -->
+<div class="hidden sm:flex flex-col gap-1 w-48 shrink-0 pb-2">
+<span class="font-label-caps text-label-caps text-muted">Target Context:</span>
+<div class="flex items-center gap-2 font-utility-data text-utility-data border border-technical px-2 py-1 bg-surface-container">
+<span class="material-symbols-outlined text-[14px] text-primary-container">picture_as_pdf</span>
+<span class="truncate">Q3_Report.pdf</span>
+</div>
+</div>
+<div class="flex-1 relative border border-technical bg-[#0B0E14] focus-within:border-primary-container transition-colors">
+<textarea class="w-full bg-transparent border-none text-body-base font-body-base text-on-surface p-3 resize-none outline-none placeholder:text-muted focus:ring-0" placeholder="Query the active document context..." rows="2"></textarea>
+<div class="absolute right-2 bottom-2 flex gap-2">
+<button class="p-1.5 text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<button class="bg-primary-container text-black p-1.5 hover:bg-primary-fixed-dim transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-drawer-overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        
+        // Auto-resize textarea logic could go here
+    </script>
+</body></html>
