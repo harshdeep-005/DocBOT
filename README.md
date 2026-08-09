@@ -1,11 +1,23 @@
-# RAG Document Chatbot
+# DocBOT 
 
-A full-stack Retrieval-Augmented Generation (RAG) chatbot. Upload a document, ask natural-language questions, and get answers grounded exclusively in that document — complete with page/slide citations so you can verify every response.
+DocBOT is full-stack Retrieval-Augmented Generation (RAG) chatbot. Upload a document, ask natural-language questions, and get answers grounded exclusively in that document — complete with page/slide citations so you can verify every response.
 
 **Stack:** FastAPI (Python) · Next.js + Tailwind CSS (TypeScript) · Chroma · Gemini API
 
 ---
+### Demo
 
+[▶️ Watch Demo](DocBOT%20demo.mp4)
+
+### Screenshots
+
+![File Upload](Screenshot%202026-08-09%20111745.png)
+
+![Dark Mode](Screenshot%202026-08-09%20111842.png)
+
+![Light Mode](Screenshot%202026-08-09%20111942.png)
+
+---
 ## Supported File Types
 
 | Format | Extension |
@@ -124,3 +136,6 @@ npm test
 | Variable | Required | Default | Description |
 |---|---|---|---|
 | `NEXT_PUBLIC_API_URL` | No | `http://localhost:8000` | Base URL of the running FastAPI backend. Change this if you deploy the backend to a remote host. |
+
+
+
