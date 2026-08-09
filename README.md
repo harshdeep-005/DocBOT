@@ -7,7 +7,7 @@ DocBOT is full-stack Retrieval-Augmented Generation (RAG) chatbot. Upload a docu
 ---
 ### Demo
 
-![DEMO](demo.gif)
+![DEMO](Demo.gif)
 
 ### Screenshots
 
